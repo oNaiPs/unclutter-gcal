@@ -1,7 +1,10 @@
-Privacy Policy and Permission Justification
+Unclutter for Google Calendar™ — Privacy Policy and Permission Justification
 
 Single Purpose Description:
-This extension's single purpose is to visually merge duplicate events that appear across multiple Google Calendars into a single, unified event display. This makes it easier for users to view events that are shared across multiple calendars without the visual clutter of duplicate entries.
+This extension's single purpose is to visually merge an event that appears on several of
+the user's Google Calendars into a single event display, striped with each calendar's
+colour. It identifies duplicates by the event identifier Google already renders on the
+page, so two distinct events that happen to share a title are left alone.
 
 Permission Justifications:
 
@@ -9,6 +12,8 @@ Permission Justifications:
 - The extension only needs to run on Google Calendar pages to modify their visual display
 - No additional host permissions are required as we only modify the page content
 - No data is collected or transmitted outside of the Google Calendar interface
+- Event identifiers are read from the page's own DOM attributes and used only to decide
+  which on-screen elements represent the same event; they are never stored or sent anywhere
 
 2. Storage Permission:
 - Used solely to store the user's preference for whether the extension is enabled or disabled
@@ -27,4 +32,7 @@ Data Usage Compliance:
 - All operations are performed client-side
 - No analytics or tracking code is included
 
-This extension complies with all Chrome Web Store developer program policies and data usage requirements.
+This extension complies with all Chrome Web Store developer program policies and data usage
+requirements.
+
+Source code: https://github.com/oNaiPs/unclutter-gcal (GPL-3.0)

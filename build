@@ -9,4 +9,15 @@ fi
 
 echo "Building version $VERSION"
 
-find . -path '*/.*' -prune -o -type f -print | zip ./gcal-multical-event-merge-${VERSION}.zip -@
+rm -f ./unclutter-gcal-*.zip
+
+# Ship only what the browser loads. Nothing is rejected for carrying extra files,
+# but every shipped byte is one more thing a store reviewer has to account for.
+find . \
+  -path '*/.*' -prune -o \
+  -path './store-listing/*' -prune -o \
+  -path './images/*' -prune -o \
+  -name '*.zip' -prune -o \
+  -name 'build' -prune -o \
+  -name 'README.md' -prune -o \
+  -type f -print | zip ./unclutter-gcal-${VERSION}.zip -@

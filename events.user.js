@@ -310,6 +310,32 @@ const resetMergedEvents = (events) => {
   });
 };
 
+// Google encodes each chip's data-eventid as base64 of "<eventId> <calendarId>".
+// The same event sitting on two calendars keeps one eventId and differs only in the
+// calendar part, so the eventId is exactly the "is this the same event?" signal --
+// including for recurring series, whose per-instance "_<UTC stamp>" suffix also
+// matches across calendars.
+//
+// Returns null for chips we cannot read an id from (Google Tasks uses a plain
+// "tasks_<id>" attribute that is not base64), so callers can fall back.
+const eventIdOf = (element) => {
+  const host = element.closest("[data-eventid]");
+  const raw = host && host.getAttribute("data-eventid");
+  if (!raw) {
+    return null;
+  }
+  let decoded;
+  try {
+    decoded = atob(raw + "=".repeat((4 - (raw.length % 4)) % 4));
+  } catch (e) {
+    return null;
+  }
+  // Calendar ids never contain a space, so the last one splits the two fields.
+  const separator = decoded.lastIndexOf(" ");
+  const eventId = separator === -1 ? decoded : decoded.slice(0, separator);
+  return eventId || null;
+};
+
 const merge = (mainCalender) => {
   const eventSets = {};
   const days = mainCalender.querySelectorAll('[role="gridcell"]');
@@ -324,18 +350,23 @@ const merge = (mainCalender) => {
       if (!eventTitleEls.length) {
         return;
       }
-      // Extract and normalize event title - trim whitespace and normalize to lowercase
-      // for more robust matching, especially for multi-day events that might have
-      // slightly different formatting
-      let eventKey = Array.from(eventTitleEls)
-        .map((el) => el.textContent.trim())
-        .filter((text) => text.length > 0) // Filter out empty strings
-        .join(" ")
-        .toLowerCase()
-        .replace(/\s+/g, ""); // Fix regex: single backslash, not double
-      // Remove event.style.height from the key as it can vary for multi-day events
-      // on different days, preventing proper matching. Use day index + title only.
-      eventKey = index + '|' + eventKey;
+      // Prefer the event id: two distinct events that happen to share a title are
+      // separate events and must stay separate, which title matching cannot tell.
+      const eventId = eventIdOf(event);
+      let eventKey;
+      if (eventId) {
+        eventKey = index + "|id|" + eventId;
+      } else {
+        // No readable id (tasks): fall back to the historical title match rather
+        // than silently dropping the chip out of merging altogether.
+        const title = Array.from(eventTitleEls)
+          .map((el) => el.textContent.trim())
+          .filter((text) => text.length > 0)
+          .join(" ")
+          .toLowerCase()
+          .replace(/\s+/g, "");
+        eventKey = index + "|title|" + title;
+      }
       eventSets[eventKey] = eventSets[eventKey] || [];
       eventSets[eventKey].push(event);
     });

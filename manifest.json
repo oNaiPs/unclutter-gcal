@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "3.1.2",
+  "version": "1.0.0",
   "manifest_version": 3,
   "content_scripts": [
     {
@@ -20,11 +20,12 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Toggle",
+    "default_title": "__MSG_actionTitle__",
     "default_icon": "icon.png"
   },
   "icons": {
-    "48": "icon.png"
+    "48": "icon.png",
+    "128": "icon-large.png"
   },
   "content_security_policy": {
     "extension_pages": "default-src 'self'"

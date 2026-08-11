@@ -1,10 +1,14 @@
 {
   "appName": {
-    "message": "Événement Merge pour Google Calendar™ (MV3)",
+    "message": "Unclutter pour Google Calendar™",
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Une extension Chrome qui fusionne visuellement les évènements identiques de plusieurs calendriers Google en un seul. Mis à jour pour Manifest V3.",
+    "message": "Fusionne en un seul événement rayé l'événement présent sur plusieurs de vos Google Calendars, en l'identifiant par son identité et non par son titre.",
     "description": "The description of the application, displayed in the web store."
+  },
+  "actionTitle": {
+    "message": "Activer ou désactiver Unclutter",
+    "description": "Tooltip on the toolbar button."
   }
 }

@@ -1,48 +1,51 @@
-# Google Multi-Calendar Event Merge
+# Unclutter for Google Calendar™
 
-Chrome extension that visually merges the same event on multiple Google Calendars into one event.
+When the same event sits on several of your Google Calendars, Google draws it once per
+calendar. Unclutter draws it once, striped with each calendar's colour.
 
-# Download [for Chrome](https://chrome.google.com/webstore/detail/event-merge-for-google-ca/idehaflielbgpaokehlhidbjlehlfcep), [for FireFox](https://addons.mozilla.org/en-US/firefox/addon/google-cal-event-merge/) or [install with Greasemonkey](https://github.com/imightbeamy/gcal-multical-event-merge/raw/master/events.user.js)
+## What makes this fork different
 
-![examples](images/examples.png)
+Every extension in this family — the [2019 original][amy], [Cal Merge][hcawn], the
+[MV3 fork][chizo] this one is built on — decides that two chips are "the same event" by
+comparing their **titles**. That is wrong in a way that loses data: two genuinely
+different meetings that happen to share a name get collapsed into one, and one of them
+becomes invisible. It has been reported for years — [imightbeamy#70][i70] (closed as
+"working as intended"), [HCAWN#25][h25] (open since 2023).
 
-### Classic UI
+Unclutter matches on **event identity** instead. Google encodes each chip's
+`data-eventid` as base64 of `"<eventId> <calendarId>"`; one event living on two
+calendars keeps a single `eventId` and differs only in the calendar half — recurring
+series included, since the per-instance `_<UTC stamp>` suffix matches across calendars
+too. So identity is available in the DOM, and title matching was never necessary.
 
-For reference, [here's the last commit before changing to support the newer UI.](https://github.com/imightbeamy/gcal-multical-event-merge/blob/bed9a531157e14bf86463ea7970f8ce0ef76db1d/events.user.js)
+Result: real duplicates still merge, same-name-different-event stops merging. Chips with
+no readable id (Google Tasks uses a plain `tasks_<id>` attribute) fall back to the old
+title behaviour rather than dropping out of merging entirely.
 
-### Build
+## Install
 
-Run `build` to create zip file for Chrome and FF.
+Not yet on the Chrome Web Store. To run it now:
 
-### Local Development Testing
+1. `git clone https://github.com/oNaiPs/unclutter-gcal.git`
+2. `chrome://extensions` → enable **Developer mode** → **Load unpacked** → pick the folder.
 
-To test this extension locally while it's pending Chrome Web Store approval:
+The toolbar button toggles merging on and off.
 
-1. Clone this repository:
+## Build
 
-   ```bash
-   git clone https://github.com/chizovation/gcal-multical-event-merge.git
-   cd gcal-multical-event-merge
-   ```
+    ./build
 
-2. Open Chrome and go to the Extensions page:
+Writes `unclutter-gcal-v<version>.zip`, the artifact to upload to the Web Store.
 
-   - Type `chrome://extensions` in the address bar, or
-   - Click the three dots menu → More Tools → Extensions
+## Credits and licence
 
-3. Enable Developer Mode:
+GPL-3.0, inherited and preserved. This is a fork of [chizovation/gcal-multical-event-merge][chizo],
+itself a fork of [imightbeamy/gcal-multical-event-merge][amy] by Amy Ciavolino, who wrote
+the original. [HCAWN/gcal-multical-event-merge][hcawn] is a sibling fork whose gradient
+fill styles are worth a look.
 
-   - Toggle the "Developer mode" switch in the top right corner
-
-4. Load the extension:
-
-   - Click "Load unpacked"
-   - Navigate to the cloned repository folder
-   - Click "Select Folder"
-
-5. The extension should now be active:
-   - You'll see the extension icon in your toolbar
-   - Visit Google Calendar to test the functionality
-   - Click the extension icon to toggle event merging on/off
-
-Note: When testing locally, Chrome will show a warning about running in developer mode. This is normal for unpacked extensions.
+[amy]: https://github.com/imightbeamy/gcal-multical-event-merge
+[hcawn]: https://github.com/HCAWN/gcal-multical-event-merge
+[chizo]: https://github.com/chizovation/gcal-multical-event-merge
+[i70]: https://github.com/imightbeamy/gcal-multical-event-merge/issues/70
+[h25]: https://github.com/HCAWN/gcal-multical-event-merge/issues/25
