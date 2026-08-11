@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Combina en un solo evento a rayas el evento que aparece en varios de tus Google Calendars, identificándolo por su identidad y no por su título.",
+    "message": "Elimina el ruido visual de Google Calendar para que tu semana se lea de un vistazo.",
     "description": "The description of the application, displayed in the web store."
   },
   "actionTitle": {

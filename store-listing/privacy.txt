@@ -1,10 +1,14 @@
 Unclutter for Google Calendar™ — Privacy Policy and Permission Justification
 
 Single Purpose Description:
-This extension's single purpose is to visually merge an event that appears on several of
-the user's Google Calendars into a single event display, striped with each calendar's
-colour. It identifies duplicates by the event identifier Google already renders on the
-page, so two distinct events that happen to share a title are left alone.
+This extension's single purpose is to improve the readability of the Google Calendar web
+interface by reducing visual clutter in the user's own calendar view. It changes only how
+the page is drawn; it never alters, creates or deletes calendar data.
+
+Its current implementation of that purpose: an event that appears on several of the user's
+calendars is drawn once, striped with each calendar's colour. Duplicates are identified by
+the event identifier Google already renders on the page, so two distinct events that happen
+to share a title are left alone.
 
 Permission Justifications:
 

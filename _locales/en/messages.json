@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Merges an event that sits on several of your Google Calendars into one striped event — matching by event identity, not by title.",
+    "message": "Takes the visual clutter out of Google Calendar so your week reads at a glance.",
     "description": "The description of the application, displayed in the web store."
   },
   "actionTitle": {

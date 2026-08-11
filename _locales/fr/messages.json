@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Fusionne en un seul événement rayé l'événement présent sur plusieurs de vos Google Calendars, en l'identifiant par son identité et non par son titre.",
+    "message": "Débarrasse Google Calendar de son encombrement visuel pour que votre semaine se lise d'un coup d'œil.",
     "description": "The description of the application, displayed in the web store."
   },
   "actionTitle": {
